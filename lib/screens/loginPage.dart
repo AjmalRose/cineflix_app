@@ -1,3 +1,6 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/fonts_constants.dart';
+import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:cineflix_app/widgets/login_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +15,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0D0D0D),
+      backgroundColor: ColorsConstants.ColorBlack,
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
@@ -20,17 +23,17 @@ class LoginPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "cineflix",
+                LoginText().cineFlix,
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
+                  color: ColorsConstants.ColorWhite,
+                  fontSize: LoginFonts.heading,
+                  fontWeight: LoginFonts.bold,
                 ),
               ),
               SizedBox(height: 8),
               Text(
-                "Stream • Discover • Enjoy",
-                style: TextStyle(color: Colors.grey),
+                LoginText.secondText,
+                style: TextStyle(color: LoginColors.colorgrey),
               ),
               SizedBox(height: 30),
 
@@ -38,41 +41,40 @@ class LoginPage extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Color(0xFF1A1A1A),
+                  color: ColorsConstants.ColorBlack,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Column(
                   children: [
                     Text(
-                      "Create Account",
+                      LoginText.createAccount,
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: LoginFonts.createAccount,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: ColorsConstants.ColorWhite,
                       ),
                     ),
                     SizedBox(height: 50),
                     Text(
-                      "Join millions of movie lovers",
-                      style: TextStyle(color: Colors.grey),
+                      LoginText.fourthText,
+                      style: TextStyle(color: LoginColors.colorgrey),
                     ),
                     SizedBox(height: 20),
 
-                    inputField("Full Name", nameCtrl),
+                    inputField(LoginText.fullName, nameCtrl),
                     SizedBox(height: 15),
-                    inputField("Email", emailCtrl),
+                    inputField(LoginText.email, emailCtrl),
                     SizedBox(height: 15),
-                    inputField("Password", passCtrl, true),
+                    inputField(LoginText.password, passCtrl, true),
                     SizedBox(height: 15),
-                    inputField("Confirm Password", confirmCtrl, true),
-
+                    inputField(LoginText.confirmPassword, confirmCtrl, true),
                     SizedBox(height: 15),
                     mainButton(context, "Create Account"),
 
                     SizedBox(height: 15),
                     Text(
-                      "Or continue with",
-                      style: TextStyle(color: Colors.grey),
+                      LoginText.orContinueWith,
+                      style: TextStyle(color: LoginColors.colorgrey),
                     ),
                     SizedBox(height: 10),
                     Row(
@@ -86,12 +88,12 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: 15),
                     Text.rich(
                       TextSpan(
-                        text: "Already have an account? ",
-                        style: TextStyle(color: Colors.grey),
+                        text: LoginText.textSpan,
+                        style: TextStyle(color: LoginColors.colorgrey),
                         children: [
                           TextSpan(
-                            text: "Sign In",
-                            style: TextStyle(color: Colors.red),
+                            text: LoginText.textSpan2,
+                            style: TextStyle(color: LoginColors.colorRed),
                           ),
                         ],
                       ),

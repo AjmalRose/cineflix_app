@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 class FeaturedMovieSection extends StatelessWidget {
@@ -6,7 +7,7 @@ class FeaturedMovieSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Stack(
@@ -25,7 +26,7 @@ class FeaturedMovieSection extends StatelessWidget {
                 child: Icon(
                   Icons.play_circle_fill_rounded,
                   size: 55,
-                  color: Color.fromARGB(255, 138, 46, 46).withOpacity(0.9),
+                  color: LoginColors.colorRed.withOpacity(0.9),
                 ),
               ),
             ),

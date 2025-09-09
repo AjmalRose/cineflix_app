@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarSection extends StatelessWidget {
@@ -22,7 +23,7 @@ class SearchBarSection extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
         ),
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: ColorsConstants.ColorWhite),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/widgets/new_Release_section.dart';
 import 'package:cineflix_app/widgets/trending_Section.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class CineflixHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: ColorsConstants.ColorBlack,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

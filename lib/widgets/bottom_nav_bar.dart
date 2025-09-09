@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/screens/downloadScreen.dart';
 import 'package:cineflix_app/screens/profile_screen.dart';
 import 'package:cineflix_app/screens/watchListScreen.dart';
@@ -32,9 +33,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.white54,
+        backgroundColor: ColorsConstants.ColorBlack,
+        selectedItemColor: LoginColors.colorRed,
+        unselectedItemColor: LoginColors.colorgrey,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [

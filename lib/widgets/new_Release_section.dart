@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/widgets/movie_Card.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,7 @@ class NewReleaseSection extends StatelessWidget {
           child: Text(
             "🆕 New Releases",
             style: TextStyle(
-              color: Colors.white,
+              color: ColorsConstants.ColorWhite,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),

@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 class CategorySection extends StatelessWidget {
@@ -15,7 +16,7 @@ class CategorySection extends StatelessWidget {
           Text(
             'Categories',
             style: TextStyle(
-              color: Colors.white,
+              color: ColorsConstants.ColorWhite,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -30,8 +31,8 @@ class CategorySection extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Chip(
                   label: Text(categories[index]),
-                  backgroundColor: Colors.red[500],
-                  labelStyle: TextStyle(color: Colors.white),
+                  backgroundColor: LoginColors.colorRed,
+                  labelStyle: TextStyle(color: ColorsConstants.ColorWhite),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

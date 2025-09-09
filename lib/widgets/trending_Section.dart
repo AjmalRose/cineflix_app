@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/widgets/movie_Card.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class TrendingSection extends StatelessWidget {
           child: Text(
             "🎬 Trending Now",
             style: TextStyle(
-              color: Colors.white,
+              color: ColorsConstants.ColorWhite,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),

@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
@@ -37,7 +38,7 @@ class MovieCard extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
+                    color: ColorsConstants.ColorBlack.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -46,7 +47,10 @@ class MovieCard extends StatelessWidget {
                       SizedBox(width: 2),
                       Text(
                         rating.toString(),
-                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        style: TextStyle(
+                          color: ColorsConstants.ColorWhite,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -58,7 +62,7 @@ class MovieCard extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: Colors.white,
+              color: ColorsConstants.ColorWhite,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
@@ -67,13 +71,13 @@ class MovieCard extends StatelessWidget {
           ),
           Text(
             year,
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: TextStyle(color: LoginColors.colorgrey, fontSize: 12),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
             genre,
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: TextStyle(color: LoginColors.colorgrey, fontSize: 12),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

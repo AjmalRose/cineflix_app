@@ -1,4 +1,5 @@
 import 'package:cineflix_app/screens/cine_Flix_homePage.dart';
+import 'package:cineflix_app/services/shared_prefs.dart';
 import 'package:cineflix_app/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -32,11 +33,12 @@ Widget mainButton(BuildContext context, String text) {
     width: double.infinity,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.symmetric(vertical: 14),
+        backgroundColor: Colors.red[700],
+        padding: const EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
-      onPressed: () {
+      onPressed: () async {
+        await SharedPrefs.setLoginStatus(true); // 🔥 Save login
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => BottomNavBar()),

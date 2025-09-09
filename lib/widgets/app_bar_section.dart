@@ -1,3 +1,5 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppBarSection extends StatelessWidget {
@@ -11,9 +13,9 @@ class AppBarSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Cineflix',
+            LoginText().cineFlix,
             style: TextStyle(
-              color: Color.fromARGB(255, 231, 35, 21),
+              color: LoginColors.colorRed,
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
