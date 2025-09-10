@@ -4,7 +4,7 @@ import 'package:cineflix_app/services/shared_prefs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  bool isLoggedIn = await SharedPrefs.getLoginStatus();
+  final isLoggedIn = await SharedPrefs.getLoginStatus();
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }

@@ -38,7 +38,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         unselectedItemColor: LoginColors.colorgrey,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: const [
+        items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark),

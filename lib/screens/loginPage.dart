@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/fonts_constants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
+import 'package:cineflix_app/services/shared_prefs.dart';
 import 'package:cineflix_app/widgets/login_widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:cineflix_app/widgets/bottom_nav_bar.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -12,13 +14,21 @@ class LoginPage extends StatelessWidget {
   final passCtrl = TextEditingController();
   final confirmCtrl = TextEditingController();
 
+  Future<void> _handleLogin(BuildContext context) async {
+    await SharedPrefs.setLoginStatus(true);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const BottomNavBar()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsConstants.ColorBlack,
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -30,16 +40,16 @@ class LoginPage extends StatelessWidget {
                   fontWeight: LoginFonts.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 LoginText.secondText,
                 style: TextStyle(color: LoginColors.colorgrey),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-              // Card Section
+              // 🔹 Card Container
               Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: ColorsConstants.ColorBlack,
                   borderRadius: BorderRadius.circular(30),
@@ -54,38 +64,55 @@ class LoginPage extends StatelessWidget {
                         color: ColorsConstants.ColorWhite,
                       ),
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     Text(
                       LoginText.fourthText,
                       style: TextStyle(color: LoginColors.colorgrey),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                    inputField(LoginText.fullName, nameCtrl),
-                    SizedBox(height: 15),
-                    inputField(LoginText.email, emailCtrl),
-                    SizedBox(height: 15),
-                    inputField(LoginText.password, passCtrl, true),
-                    SizedBox(height: 15),
-                    inputField(LoginText.confirmPassword, confirmCtrl, true),
-                    SizedBox(height: 15),
-                    mainButton(context, "Create Account"),
+                    // 🔹 Input Fields
+                    inputField(hint: LoginText.fullName, controller: nameCtrl),
+                    const SizedBox(height: 15),
+                    inputField(hint: LoginText.email, controller: emailCtrl),
+                    const SizedBox(height: 15),
+                    inputField(
+                      hint: LoginText.password,
+                      controller: passCtrl,
+                      isPassword: true,
+                    ),
+                    const SizedBox(height: 15),
+                    inputField(
+                      hint: LoginText.confirmPassword,
+                      controller: confirmCtrl,
+                      isPassword: true,
+                    ),
+                    const SizedBox(height: 15),
 
-                    SizedBox(height: 15),
+                    // 🔹 Main Button
+                    mainButton(
+                      text: "Create Account",
+                      onPressed: () => _handleLogin(context),
+                    ),
+
+                    const SizedBox(height: 15),
                     Text(
                       LoginText.orContinueWith,
                       style: TextStyle(color: LoginColors.colorgrey),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
+
+                    // 🔹 Social Login Row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         socialButton(Icons.g_mobiledata),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         socialButton(Icons.apple),
                       ],
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
+
                     Text.rich(
                       TextSpan(
                         text: LoginText.textSpan,
