@@ -45,7 +45,7 @@ class FeaturedMovieSection extends StatelessWidget {
           enlargeCenterPage: true,
           viewportFraction: 0.85,
           autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
         ),
         itemBuilder: (context, index, realIndex) {
           final movie = featuredMovies[index];

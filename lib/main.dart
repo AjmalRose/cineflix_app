@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cineflix_app/models/user_model.dart';
 import 'package:cineflix_app/screens/splashScreen.dart';
 import 'package:cineflix_app/services/shared_prefs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final dir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(dir.path);
+
+  Hive.registerAdapter(UserModelAdapter());
+
   final isLoggedIn = await SharedPrefs.getLoginStatus();
 
   runApp(MyApp(isLoggedIn: isLoggedIn));

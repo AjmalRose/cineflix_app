@@ -44,10 +44,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: Icon(Icons.bookmark),
             label: 'Watchlist',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.download),
-            label: 'Downloads',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.download), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),

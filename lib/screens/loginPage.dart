@@ -3,6 +3,8 @@ import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/fonts_constants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:cineflix_app/services/shared_prefs.dart';
+import 'package:cineflix_app/services/user_service.dart';
+import 'package:cineflix_app/models/user_model.dart';
 import 'package:cineflix_app/widgets/login_widgets.dart';
 import 'package:cineflix_app/widgets/bottom_nav_bar.dart';
 
@@ -15,10 +17,33 @@ class LoginPage extends StatelessWidget {
   final confirmCtrl = TextEditingController();
 
   Future<void> _handleLogin(BuildContext context) async {
-    await SharedPrefs.setLoginStatus(true);
+    final name = nameCtrl.text.trim();
+    final email = emailCtrl.text.trim();
+    final pass = passCtrl.text.trim();
+    final confirm = confirmCtrl.text.trim();
+
+    if (name.isEmpty || email.isEmpty || pass.isEmpty || confirm.isEmpty) {
+      _showError(context, "Please fill all fields");
+      return;
+    }
+    if (pass != confirm) {
+      _showError(context, "Passwords do not match");
+      return;
+    }
+
+    final user = UserModel(fullName: name, email: email, password: pass);
+    await UserService.saveUser(user); // save user
+    await SharedPrefs.setLoginStatus(true); // save login state
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const BottomNavBar()),
+    );
+  }
+
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.red),
     );
   }
 
@@ -47,7 +72,6 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // 🔹 Card Container
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -89,7 +113,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
 
-                    // 🔹 Main Button
+                    // 🔹 Main Button with new logic
                     mainButton(
                       text: "Create Account",
                       onPressed: () => _handleLogin(context),
@@ -102,7 +126,6 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
 
-                    // 🔹 Social Login Row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

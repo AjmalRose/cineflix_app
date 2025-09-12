@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:cineflix_app/screens/loginPage.dart';
-import 'package:cineflix_app/widgets/bottom_nav_bar.dart'; // ✅ Import this
+import 'package:cineflix_app/widgets/bottom_nav_bar.dart';
 
 class SplashScreen extends StatefulWidget {
   final bool isLoggedIn;
@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), _navigate);
+    Timer(Duration(seconds: 3), _navigate);
   }
 
   void _navigate() {
@@ -25,8 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) =>
-            widget.isLoggedIn ? const BottomNavBar() : LoginPage(), // ✅ FIX
+        builder: (_) => widget.isLoggedIn ? BottomNavBar() : LoginPage(),
       ),
     );
   }
@@ -40,10 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("assets/images/logo-removebg-preview.png"),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Text(
               TextConstants().splashwelcome,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,
                 fontWeight: FontWeight.bold,

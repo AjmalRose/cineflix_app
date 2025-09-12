@@ -1,10 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_movie_card.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_pie_chart.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_stats_card.dart';
-import 'package:flutter/material.dart';
+import 'package:cineflix_app/widgets/watchList_widgets/watchList_legend.dart';
 
-class WatchlistScreen extends StatelessWidget {
+class WatchlistScreen extends StatefulWidget {
   const WatchlistScreen({super.key});
+
+  @override
+  State<WatchlistScreen> createState() => _WatchlistScreenState();
+}
+
+class _WatchlistScreenState extends State<WatchlistScreen> {
+  Map<String, int> genreCounts = {};
+  Map<String, Color> genreColors = {};
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +31,11 @@ class WatchlistScreen extends StatelessWidget {
           children: [
             Text(
               "Track your viewing habits",
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(color: Colors.grey, fontSize: 16),
             ),
             SizedBox(height: 20),
 
+            // Stats Cards
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -43,7 +53,7 @@ class WatchlistScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
 
-            // Pie Chart
+            // Pie Chart + Legend
             Container(
               decoration: BoxDecoration(
                 color: Color(0xFF1A1A1A),
@@ -54,9 +64,31 @@ class WatchlistScreen extends StatelessWidget {
                 children: [
                   Text(
                     "Viewing Categories",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(height: 200, child: WatchlistPieChart()),
+                  SizedBox(height: 10),
+
+                  // Pie Chart with dynamic data
+                  WatchlistPieChart(
+                    onDataLoaded: (counts, colors) {
+                      setState(() {
+                        genreCounts = counts;
+                        genreColors = colors;
+                      });
+                    },
+                  ),
+
+                  SizedBox(height: 10),
+
+                  // Legend directly below pie chart
+                  WatchlistLegend(
+                    genreColors: genreColors,
+                    genreCounts: genreCounts,
+                  ),
                 ],
               ),
             ),
@@ -65,11 +97,16 @@ class WatchlistScreen extends StatelessWidget {
             // Upcoming Releases
             Text(
               "Upcoming Releases",
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 10),
+
             WatchlistMovieCard(
-              title: "Dune:2",
+              title: "Dune: Part Two",
               date: "March 15, 2024",
               genre: "Sci-Fi",
               image: "assets/images/Dune_Part_Two_poster.jpeg",
@@ -81,7 +118,7 @@ class WatchlistScreen extends StatelessWidget {
               image: "assets/images/Black_Phone_2_poster.jpg",
             ),
             WatchlistMovieCard(
-              title: "Demon Slayer - The Movie: Infinity Castle",
+              title: "Demon Slayer: Infinity Castle",
               date: "Sep 12, 2025",
               genre: "Animation",
               image:

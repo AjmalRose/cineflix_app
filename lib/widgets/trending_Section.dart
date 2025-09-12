@@ -1,13 +1,12 @@
-import 'package:cineflix_app/constants/colors_contants.dart';
-import 'package:cineflix_app/widgets/movie_Card.dart';
 import 'package:flutter/material.dart';
+import 'package:cineflix_app/widgets/movie_section.dart';
 
 class TrendingSection extends StatelessWidget {
   const TrendingSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final movies = [
+    final trendingMovies = [
       {
         'image':
             'assets/images/avengers-endgame-2019-directed-by-anthony-and-joe-russo-starring-bradley-cooper-brie-larson-and-chris-hemsworth-epic-conclusion-and-22nd-film-in-the-marvel-cinematic-universe-T33DPT.jpg',
@@ -15,6 +14,8 @@ class TrendingSection extends StatelessWidget {
         'year': '2019',
         'genre': 'Action',
         'rating': 8.4,
+        'description':
+            "Avengers: Endgame is the culmination of 22 films in the Marvel Cinematic Universe (MCU), following the devastating events of Avengers: Infinity War where Thanos erased half of all life in the universe.",
       },
       {
         'image':
@@ -23,6 +24,8 @@ class TrendingSection extends StatelessWidget {
         'year': '1994',
         'genre': 'Drama',
         'rating': 9.3,
+        'description':
+            "The Shawshank Redemption is a 1994 American prison drama film about Andy Dufresne (Tim Robbins), a banker wrongly convicted of murdering his wife, who finds hope and forms a lasting friendship with Ellis  Redding (Morgan Freeman) during his life sentence at the harsh Shawshank State Penitentiary.",
       },
       {
         'image':
@@ -31,51 +34,20 @@ class TrendingSection extends StatelessWidget {
         'year': '2010',
         'genre': 'Thriller',
         'rating': 8.8,
+        'description':
+            "a 2010 science fiction action heist film written and directed by Christopher Nolan, starring Leonardo DiCaprio as a corporate thief who steals information by entering people's dreams.",
       },
       {
         'image': 'assets/images/713o2iu99hL._UF894,1000_QL80_.jpg',
-        'title': 'pulp Fiction',
+        'title': 'Pulp Fiction',
         'year': '1994',
         'genre': 'Crime',
         'rating': 8.9,
+        'description':
+            "Pulp Fiction is a 1994 independent crime film by Quentin Tarantino that tells a non-linear, interconnected story of several criminals in Los Angeles. ",
       },
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            "🎬 Trending Now",
-            style: TextStyle(
-              color: ColorsConstants.ColorWhite,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        SizedBox(height: 30),
-        SizedBox(
-          height: 300,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            itemCount: movies.length,
-            separatorBuilder: (_, __) => SizedBox(width: 12),
-            itemBuilder: (context, index) {
-              final movie = movies[index];
-              return MovieCard(
-                image: movie['image'] as String,
-                title: movie['title'] as String,
-                year: movie['year'] as String,
-                genre: movie['genre'] as String,
-                rating: movie['rating'] as double,
-              );
-            },
-          ),
-        ),
-      ],
-    );
+    return MovieSection(title: "🎬 Trending Now", movies: trendingMovies);
   }
 }

@@ -1,26 +1,29 @@
-import 'package:cineflix_app/constants/colors_contants.dart';
-import 'package:cineflix_app/widgets/movie_Card.dart';
 import 'package:flutter/material.dart';
+import 'package:cineflix_app/widgets/movie_section.dart';
 
 class NewReleaseSection extends StatelessWidget {
   const NewReleaseSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final movies = [
+    final newMovies = [
       {
         'image': 'assets/images/images.jpeg',
         'title': 'Indiana Jones',
         'year': '2023',
         'genre': 'Adventure',
         'rating': 7.2,
+        'description':
+            "a series of films centered on the adventures of fictional archaeologist and adventurer Dr. Indiana Jones, who races against villains to find and secure powerful, legendary artifacts to prevent them from falling into the wrong hands.",
       },
       {
         'image': 'assets/images/images (1).jpeg',
-        'title': ' The Notebook 2',
+        'title': 'The Notebook 2',
         'year': '2004',
         'genre': 'Romance',
         'rating': 7.8,
+        'description':
+            " While the story of Noah and Allie concluded in the first film, fans and social media pages sometimes create hypothetical plot descriptions, such as one involving a rediscovered journal or a continuation of their story with their children's lives. The only continuation of the story is the 2003 novel The Wedding, which is a sequel to the book but has not been adapted into a movie, and remains a fictional possibility for a film. ",
       },
       {
         'image': 'assets/images/81y0foYjoFL._UF1000,1000_QL80_.jpg',
@@ -28,6 +31,8 @@ class NewReleaseSection extends StatelessWidget {
         'year': '2021',
         'genre': 'Action',
         'rating': 8.3,
+        'description':
+            "Thrilled by his experience with the Avengers, young Peter Parker returns home to live with his Aunt May. Under the watchful eye of mentor Tony Stark, Parker starts to embrace his newfound identity as Spider-Man.",
       },
       {
         'image': 'assets/images/Dune_(2021_film).jpg',
@@ -35,44 +40,11 @@ class NewReleaseSection extends StatelessWidget {
         'year': '2021',
         'genre': 'Sci-Fi',
         'rating': 8.1,
+        'description':
+            "an epic sci-fi film adaptation of Frank Herbert's classic novel, following Paul Atreides as his family is tasked with governing the dangerous desert planet Arrakis",
       },
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            "🆕 New Releases",
-            style: TextStyle(
-              color: ColorsConstants.ColorWhite,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-        SizedBox(
-          height: 300,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            itemCount: movies.length,
-            separatorBuilder: (_, __) => SizedBox(width: 12),
-            itemBuilder: (context, index) {
-              final m = movies[index];
-              return MovieCard(
-                image: m['image'] as String,
-                title: m['title'] as String,
-                year: m['year'] as String,
-                genre: m['genre'] as String,
-                rating: m['rating'] as double,
-              );
-            },
-          ),
-        ),
-      ],
-    );
+    return MovieSection(title: "🆕 New Releases", movies: newMovies);
   }
 }
