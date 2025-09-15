@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_movie_card.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_pie_chart.dart';
@@ -18,10 +19,13 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: ColorsConstants.ColorBlack,
       appBar: AppBar(
-        backgroundColor: Colors.red[700],
-        title: Text("My Watchlist", style: TextStyle(color: Colors.white)),
+        backgroundColor: LoginColors.darkRed,
+        title: Text(
+          "My Watchlist",
+          style: TextStyle(color: ColorsConstants.ColorWhite),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -31,7 +35,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
           children: [
             Text(
               "Track your viewing habits",
-              style: TextStyle(color: Colors.grey, fontSize: 16),
+              style: TextStyle(color: LoginColors.colorgrey, fontSize: 16),
             ),
             SizedBox(height: 20),
 
@@ -56,7 +60,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
             // Pie Chart + Legend
             Container(
               decoration: BoxDecoration(
-                color: Color(0xFF1A1A1A),
+                color: ColorsConstants.ColorBlack,
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: EdgeInsets.all(16),
@@ -65,7 +69,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                   Text(
                     "Viewing Categories",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: ColorsConstants.ColorWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -98,7 +102,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
             Text(
               "Upcoming Releases",
               style: TextStyle(
-                color: Colors.white,
+                color: ColorsConstants.ColorWhite,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),

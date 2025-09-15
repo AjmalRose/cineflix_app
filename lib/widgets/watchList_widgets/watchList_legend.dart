@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 class WatchlistLegend extends StatelessWidget {
@@ -25,7 +26,7 @@ class WatchlistLegend extends StatelessWidget {
         children: genreCounts.entries.map((entry) {
           final genre = entry.key;
           final count = entry.value;
-          final color = genreColors[genre] ?? Colors.grey;
+          final color = genreColors[genre] ?? LoginColors.colorgrey;
 
           return Row(
             mainAxisSize: MainAxisSize.min,
@@ -39,7 +40,10 @@ class WatchlistLegend extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 6),
-              Text("$genre ($count)", style: TextStyle(color: Colors.white)),
+              Text(
+                "$genre ($count)",
+                style: TextStyle(color: ColorsConstants.ColorWhite),
+              ),
             ],
           );
         }).toList(),

@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cineflix_app/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'carousel_image.dart';
 
@@ -7,26 +8,25 @@ class FeaturedMovieSection extends StatelessWidget {
 
   final List<Map<String, String>> featuredMovies = [
     {
-      'image': 'assets/images/F1-Film-Poster-001-750x400.jpg',
+      'image': AppImages.f1Poster,
       'title': 'F1',
       'description':
           'The Movie ... A Formula One driver comes out of retirement to mentor and team with a younger driver.',
     },
     {
-      'image': 'assets/images/Lokah-teaser.jpg',
+      'image': AppImages.lokahPoster,
       'title': 'Lokah',
       'description':
           'Lokah Chapter One: Chandra feels like a strong step towards showing how the..',
     },
     {
-      'image': 'assets/images/1947571-coolie-movie-poster.jpg',
+      'image': AppImages.cooliePoster,
       'title': 'Coolie',
       'description':
           'The film Coolie (2025) follows Deva (Rajinikanth), a man with a dark past, who seeks vengeance after his friend,',
     },
     {
-      'image':
-          'assets/images/DSICDateAnnouncementKV2x3UK-1-Cropped-5bb23a9 (1).png',
+      'image': AppImages.demonSlayerPoster,
       'title': 'Demon Slayer: Kimetsu no Yaiba  Infinity Castle',
       'description':
           'The Demon Slayer Corps are drawn into the Infinity Castle, where Tanjiro, Nezuko, and the Hashira face terrifying Upper Rank demons in a desperate fight.',

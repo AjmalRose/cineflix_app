@@ -37,13 +37,13 @@ class LoginPage extends StatelessWidget {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const BottomNavBar()),
+      MaterialPageRoute(builder: (_) => BottomNavBar()),
     );
   }
 
   void _showError(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.red),
+      SnackBar(content: Text(message), backgroundColor: LoginColors.colorRed),
     );
   }
 
@@ -53,7 +53,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: ColorsConstants.ColorBlack,
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -65,15 +65,15 @@ class LoginPage extends StatelessWidget {
                   fontWeight: LoginFonts.bold,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 LoginText.secondText,
                 style: TextStyle(color: LoginColors.colorgrey),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: 30),
 
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: ColorsConstants.ColorBlack,
                   borderRadius: BorderRadius.circular(30),
@@ -88,53 +88,53 @@ class LoginPage extends StatelessWidget {
                         color: ColorsConstants.ColorWhite,
                       ),
                     ),
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50),
                     Text(
                       LoginText.fourthText,
                       style: TextStyle(color: LoginColors.colorgrey),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // 🔹 Input Fields
                     inputField(hint: LoginText.fullName, controller: nameCtrl),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
                     inputField(hint: LoginText.email, controller: emailCtrl),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
                     inputField(
                       hint: LoginText.password,
                       controller: passCtrl,
                       isPassword: true,
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
                     inputField(
                       hint: LoginText.confirmPassword,
                       controller: confirmCtrl,
                       isPassword: true,
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
 
-                    // 🔹 Main Button with new logic
+                    // 🔹 Main Button with  logic
                     mainButton(
                       text: "Create Account",
                       onPressed: () => _handleLogin(context),
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
                     Text(
                       LoginText.orContinueWith,
                       style: TextStyle(color: LoginColors.colorgrey),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         socialButton(Icons.g_mobiledata),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         socialButton(Icons.apple),
                       ],
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
 
                     Text.rich(
                       TextSpan(

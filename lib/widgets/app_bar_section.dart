@@ -1,4 +1,5 @@
 import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/image_constants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class AppBarSection extends StatelessWidget {
           ),
           CircleAvatar(
             radius: 20,
-            backgroundImage: AssetImage("assets/images/profile-icon.jpg"),
+            backgroundImage: AssetImage(AppImages.appBarImage),
           ),
         ],
       ),

@@ -2,22 +2,22 @@ import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarSection extends StatelessWidget {
-  final ValueChanged<String> onSearch;
+  final ValueChanged<String>? onSearch;
 
-  const SearchBarSection({super.key, required this.onSearch});
+  const SearchBarSection({super.key, this.onSearch});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       child: TextField(
-        onChanged: onSearch,
+        onChanged: onSearch ?? (_) {},
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.grey[900],
           hintText: 'Search movies, series...',
-          hintStyle: TextStyle(color: Colors.white54),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white54),
+          prefixIcon: const Icon(
             Icons.youtube_searched_for_rounded,
             color: Colors.redAccent,
           ),

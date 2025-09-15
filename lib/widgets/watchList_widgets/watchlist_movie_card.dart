@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 class WatchlistMovieCard extends StatelessWidget {
@@ -19,7 +20,7 @@ class WatchlistMovieCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: Color(0xFF1A1A1A),
+        color: ColorsConstants.ColorBlack,
         borderRadius: BorderRadius.circular(20),
       ),
       child: ListTile(
@@ -29,16 +30,19 @@ class WatchlistMovieCard extends StatelessWidget {
         ),
         title: Text(
           title,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: ColorsConstants.ColorWhite,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        subtitle: Text(date, style: TextStyle(color: Colors.grey)),
+        subtitle: Text(date, style: TextStyle(color: LoginColors.colorgrey)),
         trailing: Container(
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: Colors.red.withOpacity(0.2),
+            color: LoginColors.colorRed.withOpacity(0.2),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(genre, style: TextStyle(color: Colors.red)),
+          child: Text(genre, style: TextStyle(color: LoginColors.colorRed)),
         ),
       ),
     );

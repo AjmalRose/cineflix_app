@@ -18,10 +18,8 @@ class CarouselImage extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       child: Stack(
         children: [
-          // 🔹 Background Image
           Image.asset(imagePath, fit: BoxFit.cover, width: double.infinity),
 
-          // 🔹 Gradient Overlay for Better Text Visibility
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -32,7 +30,6 @@ class CarouselImage extends StatelessWidget {
             ),
           ),
 
-          // 🔹 Title + Description + Play Icon
           Positioned(
             bottom: 16,
             left: 16,

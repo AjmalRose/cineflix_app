@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cineflix_app/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
@@ -38,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/logo-removebg-preview.png"),
+            Image.asset(AppImages.SplashScreenImage),
             SizedBox(height: 20),
             Text(
               TextConstants().splashwelcome,

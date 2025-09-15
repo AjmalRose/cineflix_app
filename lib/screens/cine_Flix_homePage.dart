@@ -20,6 +20,7 @@ class CineflixHomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppBarSection(),
+              SearchBarSection(),
               FeaturedMovieSection(),
               CategorySection(),
               TrendingSection(),

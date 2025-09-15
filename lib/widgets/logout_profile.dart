@@ -6,7 +6,7 @@ class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
 
   Future<void> _logout(BuildContext context) async {
-    await SharedPrefs.setLoginStatus(false); // 🔥 Clear login
+    await SharedPrefs.setLoginStatus(false);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => LoginPage()),
@@ -19,9 +19,9 @@ class LogoutButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => _logout(context),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Row(
-          children: const [
+          children: [
             Icon(Icons.logout, color: Colors.red),
             SizedBox(width: 15),
             Text("Logout", style: TextStyle(color: Colors.red, fontSize: 18)),

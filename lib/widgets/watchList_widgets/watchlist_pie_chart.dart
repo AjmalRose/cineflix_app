@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'watch_tracker.dart';
@@ -16,14 +17,14 @@ class _WatchlistPieChartState extends State<WatchlistPieChart> {
   Map<String, int> genreCounts = {};
 
   final Map<String, Color> genreColors = {
-    "Action": Colors.redAccent,
-    "Drama": Colors.blueAccent,
-    "Thriller": Colors.purpleAccent,
-    "Crime": Colors.orangeAccent,
-    "Romance": Colors.pinkAccent,
-    "Sci-Fi": Colors.greenAccent,
-    "Adventure": Colors.tealAccent,
-    "Animation": Colors.amberAccent,
+    "Action": PieColor.action,
+    "Drama": PieColor.drama,
+    "Thriller": PieColor.thriller,
+    "Crime": PieColor.crime,
+    "Romance": PieColor.romance,
+    "Sci-Fi": PieColor.scifi,
+    "Adventure": PieColor.adventure,
+    "Animation": PieColor.animation,
   };
 
   @override
@@ -45,7 +46,7 @@ class _WatchlistPieChartState extends State<WatchlistPieChart> {
       return Center(
         child: Text(
           "No watch stats yet.",
-          style: TextStyle(color: Colors.white70),
+          style: TextStyle(color: ColorsConstants.ColorWhite),
         ),
       );
     }
@@ -64,11 +65,11 @@ class _WatchlistPieChartState extends State<WatchlistPieChart> {
               sections: genreCounts.entries.map((entry) {
                 final percentage = (entry.value / total) * 100;
                 return PieChartSectionData(
-                  color: genreColors[entry.key] ?? Colors.grey,
+                  color: genreColors[entry.key] ?? LoginColors.colorgrey,
                   value: entry.value.toDouble(),
                   title: "${percentage.toStringAsFixed(1)}%",
                   titleStyle: TextStyle(
-                    color: Colors.white,
+                    color: ColorsConstants.ColorWhite,
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
@@ -92,14 +93,14 @@ class _WatchlistPieChartState extends State<WatchlistPieChart> {
                   width: 16,
                   height: 16,
                   decoration: BoxDecoration(
-                    color: genreColors[entry.key] ?? Colors.grey,
+                    color: genreColors[entry.key] ?? LoginColors.colorgrey,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
                 SizedBox(width: 6),
                 Text(
                   "${entry.key} (${entry.value})",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: ColorsConstants.ColorWhite),
                 ),
               ],
             );

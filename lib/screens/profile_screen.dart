@@ -31,37 +31,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: user == null
-            ? const Center(
+            ? Center(
                 child: Text(
                   "No user found",
                   style: TextStyle(color: Colors.white),
                 ),
               )
             : SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
-                    const CircleAvatar(
+                    SizedBox(height: 20),
+                    CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage("assets/images/profile.jpg"),
+                      backgroundImage: NetworkImage(
+                        "https://cdn-icons-png.freepik.com/512/8608/8608769.png",
+                      ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
                     Text(
                       user!.fullName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: 5),
                     Text(
                       user!.email,
-                      style: const TextStyle(color: Colors.grey, fontSize: 16),
+                      style: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30),
                     _buildOption(
                       Icons.edit,
                       "Edit Profile",
@@ -75,9 +77,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _buildOption(Icons.notifications, "Notifications"),
                     _buildOption(Icons.settings, "Settings"),
                     _buildOption(Icons.help_outline, "Help & Support"),
-                    const LogoutButton(),
-                    const SizedBox(height: 30),
-                    const Text(
+                    LogoutButton(),
+                    SizedBox(height: 30),
+                    Text(
                       "Version 1.0.0",
                       style: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
@@ -97,14 +99,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
             Icon(icon, color: color),
-            const SizedBox(width: 15),
+            SizedBox(width: 15),
             Text(text, style: TextStyle(color: color, fontSize: 18)),
-            const Spacer(),
-            const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+            Spacer(),
+            Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
           ],
         ),
       ),
