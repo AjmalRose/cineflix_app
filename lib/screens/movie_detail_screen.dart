@@ -1,4 +1,3 @@
-import 'package:cineflix_app/widgets/watchList_widgets/watch_tracker.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 
@@ -9,6 +8,7 @@ class MovieDetailScreen extends StatefulWidget {
   final String genre;
   final double rating;
   final String description;
+  final String duration; // new required property
 
   const MovieDetailScreen({
     Key? key,
@@ -18,6 +18,7 @@ class MovieDetailScreen extends StatefulWidget {
     required this.genre,
     required this.rating,
     required this.description,
+    required this.duration,
   }) : super(key: key);
 
   @override
@@ -71,8 +72,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ),
                   ),
                   SizedBox(height: 8),
+                  // <-- rating + duration here
                   Text(
-                    "${widget.year} • ${widget.genre} • ⭐ ${widget.rating}",
+                    "${widget.year} • ${widget.genre} • ⭐ ${widget.rating} • ${widget.duration}",
                     style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
                   SizedBox(height: 16),
@@ -87,7 +89,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        isSaved ? "Saved ✅" : "Save to Downloads",
+                        isSaved ? "Saved ✅" : "Save to Favourite",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -110,16 +112,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: () async {
-                            await WatchTracker.addGenre(widget.genre);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  "${widget.genre} added to Watch Stats!",
-                                ),
-                              ),
-                            );
-                            Navigator.pop(context); // 👈 Go back home
+                          onPressed: () {
+                            // TODO: open player / playback
                           },
                           icon: Icon(Icons.play_arrow),
                           label: Text("Watch Now"),

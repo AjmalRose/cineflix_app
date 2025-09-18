@@ -1,12 +1,14 @@
+import 'package:cineflix_app/screens/signInPage.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
-import 'package:cineflix_app/constants/fonts_constants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:cineflix_app/services/shared_prefs.dart';
 import 'package:cineflix_app/services/user_service.dart';
 import 'package:cineflix_app/models/user_model.dart';
 import 'package:cineflix_app/widgets/login_widgets.dart';
 import 'package:cineflix_app/widgets/bottom_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -31,10 +33,16 @@ class LoginPage extends StatelessWidget {
       return;
     }
 
+    // save user into your custom service
     final user = UserModel(fullName: name, email: email, password: pass);
-    await UserService.saveUser(user); // save user
-    await SharedPrefs.setLoginStatus(true); // save login state
+    await UserService.saveUser(user);
+    await SharedPrefs.setLoginStatus(true);
 
+    // 🔹 save full name into SharedPreferences (so AppBarSection can read it)
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_name', name);
+
+    // 🔹 navigate to home
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => BottomNavBar()),
@@ -61,8 +69,8 @@ class LoginPage extends StatelessWidget {
                 LoginText().cineFlix,
                 style: TextStyle(
                   color: ColorsConstants.ColorWhite,
-                  fontSize: LoginFonts.heading,
-                  fontWeight: LoginFonts.bold,
+                  fontSize: AppFonts.heading,
+                  fontWeight: AppFonts.bold,
                 ),
               ),
               SizedBox(height: 8),
@@ -83,7 +91,7 @@ class LoginPage extends StatelessWidget {
                     Text(
                       LoginText.createAccount,
                       style: TextStyle(
-                        fontSize: LoginFonts.createAccount,
+                        fontSize: AppFonts.createAccount,
                         fontWeight: FontWeight.bold,
                         color: ColorsConstants.ColorWhite,
                       ),
@@ -113,7 +121,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 15),
 
-                    // 🔹 Main Button with  logic
+                    // 🔹 Main Button with login logic
                     mainButton(
                       text: "Create Account",
                       onPressed: () => _handleLogin(context),
@@ -144,6 +152,15 @@ class LoginPage extends StatelessWidget {
                           TextSpan(
                             text: LoginText.textSpan2,
                             style: TextStyle(color: LoginColors.colorRed),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => SignInPage(),
+                                  ),
+                                );
+                              },
                           ),
                         ],
                       ),

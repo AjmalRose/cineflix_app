@@ -1,4 +1,5 @@
 import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:flutter/material.dart';
 
 class CategorySection extends StatelessWidget {
@@ -15,12 +16,11 @@ class CategorySection extends StatelessWidget {
         children: [
           Text(
             'Categories',
-            style: TextStyle(
+            style: AppFonts.categoriesTitle.copyWith(
               color: ColorsConstants.ColorWhite,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
             ),
           ),
+
           SizedBox(height: 10),
           SizedBox(
             height: 35,

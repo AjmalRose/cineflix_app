@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:flutter/material.dart';
 
 Widget inputField({
@@ -10,12 +11,15 @@ Widget inputField({
     child: TextField(
       controller: controller,
       obscureText: isPassword,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(
+        color: ColorsConstants.ColorBlack,
+        fontWeight: FontWeight.bold,
+      ),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: TextStyle(color: LoginColors.darkRed),
         filled: true,
-        fillColor: Color(0xFF2A2A2A),
+        fillColor: LoginColors.colorgrey,
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -31,7 +35,7 @@ Widget mainButton({required String text, required VoidCallback onPressed}) {
     width: double.infinity,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red[700],
+        backgroundColor: LoginColors.darkRed,
         padding: EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
@@ -39,9 +43,9 @@ Widget mainButton({required String text, required VoidCallback onPressed}) {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: ColorsConstants.ColorWhite,
         ),
       ),
     ),
@@ -50,8 +54,8 @@ Widget mainButton({required String text, required VoidCallback onPressed}) {
 
 Widget socialButton(IconData icon) {
   return CircleAvatar(
-    backgroundColor: Color(0xFF2A2A2A),
-    radius: 22,
-    child: Icon(icon, color: Colors.white),
+    backgroundColor: LoginColors.darkRed,
+    radius: 30,
+    child: Icon(icon, color: LoginColors.bluecolor),
   );
 }

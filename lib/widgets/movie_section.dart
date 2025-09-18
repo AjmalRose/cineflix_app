@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/widgets/movie_Card.dart';
@@ -18,11 +19,7 @@ class MovieSection extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             title,
-            style: TextStyle(
-              color: ColorsConstants.ColorWhite,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+            style: AppFonts.titles.copyWith(color: ColorsConstants.ColorWhite),
           ),
         ),
         SizedBox(height: 12),
@@ -41,6 +38,7 @@ class MovieSection extends StatelessWidget {
                 year: movie['year'] as String,
                 genre: movie['genre'] as String,
                 rating: movie['rating'] as double,
+                duration: movie['duration'] as String,
                 description: movie['description'] as String?,
               );
             },

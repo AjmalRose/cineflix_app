@@ -1,3 +1,5 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:flutter/material.dart';
 
 class SearchList extends StatelessWidget {
@@ -19,13 +21,11 @@ class SearchList extends StatelessWidget {
     if (displayList.isEmpty) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(20.0),
           child: Text(
             "No movies found for \"$query\"",
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+            style: AppFonts.noMoviesFound.copyWith(
+              color: ColorsConstants.ColorWhite,
             ),
           ),
         ),
@@ -33,9 +33,9 @@ class SearchList extends StatelessWidget {
     }
 
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       itemCount: displayList.length,
-      separatorBuilder: (_, __) => const Divider(color: Colors.white24),
+      separatorBuilder: (_, __) => Divider(color: Colors.white24),
       itemBuilder: (context, index) {
         final movie = displayList[index];
         return ListTile(
@@ -50,16 +50,13 @@ class SearchList extends StatelessWidget {
           ),
           title: Text(
             movie['title']!,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
             movie['description']!,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
+            style: TextStyle(color: Colors.white70, fontSize: 12),
           ),
         );
       },

@@ -1,5 +1,5 @@
 import 'package:cineflix_app/constants/colors_contants.dart';
-import 'package:cineflix_app/screens/downloadScreen.dart';
+import 'package:cineflix_app/screens/favouritePage.dart';
 import 'package:cineflix_app/screens/profile_screen.dart';
 import 'package:cineflix_app/screens/watchListScreen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _pages = [
     CineflixHomePage(),
     WatchlistScreen(),
-    DownloadsScreen(),
+    FavouritePage(),
     ProfileScreen(),
   ];
 
@@ -31,10 +31,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsConstants.ColorWhite,
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: ColorsConstants.ColorBlack,
-        selectedItemColor: LoginColors.colorRed,
+        selectedItemColor: LoginColors.redAccent,
         unselectedItemColor: LoginColors.colorgrey,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -44,8 +45,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: Icon(Icons.bookmark),
             label: 'Watchlist',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.download), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favourite',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'You'),
         ],
       ),
     );

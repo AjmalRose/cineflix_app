@@ -1,3 +1,4 @@
+import 'package:cineflix_app/constants/image_constants.dart';
 import 'package:cineflix_app/screens/editProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/models/user_model.dart';
@@ -45,9 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: 20),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: NetworkImage(
-                        "https://cdn-icons-png.freepik.com/512/8608/8608769.png",
-                      ),
+                      backgroundImage: NetworkImage(AppImages.profilePic),
                     ),
                     SizedBox(height: 15),
                     Text(

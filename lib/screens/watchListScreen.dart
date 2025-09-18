@@ -1,4 +1,5 @@
 import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_movie_card.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_pie_chart.dart';
@@ -113,20 +114,19 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
               title: "Dune: Part Two",
               date: "March 15, 2024",
               genre: "Sci-Fi",
-              image: "assets/images/Dune_Part_Two_poster.jpeg",
+              image: AppImages.duneParttwo,
             ),
             WatchlistMovieCard(
               title: "Black Phone 2",
               date: "Oct 17, 2025",
               genre: "Thriller",
-              image: "assets/images/Black_Phone_2_poster.jpg",
+              image: AppImages.blackPhone2,
             ),
             WatchlistMovieCard(
               title: "Demon Slayer: Infinity Castle",
               date: "Sep 12, 2025",
               genre: "Animation",
-              image:
-                  "assets/images/DSICDateAnnouncementKV2x3UK-1-Cropped-5bb23a9.png",
+              image: AppImages.demonSlayer,
             ),
           ],
         ),

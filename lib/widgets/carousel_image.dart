@@ -1,3 +1,5 @@
+import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:flutter/material.dart';
 
 class CarouselImage extends StatelessWidget {
@@ -25,7 +27,10 @@ class CarouselImage extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+                colors: [
+                  Colors.transparent,
+                  ColorsConstants.ColorBlack.withOpacity(0.7),
+                ],
               ),
             ),
           ),
@@ -39,24 +44,25 @@ class CarouselImage extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                  style: AppFonts.carouselSliderfont.copyWith(
+                    color: ColorsConstants.ColorWhite,
                   ),
                 ),
                 SizedBox(height: 4),
                 Text(
                   description,
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  style: AppFonts.carouselSliderfont1.copyWith(
+                    color: LoginColors.colorgrey,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
+
                 SizedBox(height: 10),
                 Icon(
                   Icons.play_circle_fill_rounded,
                   size: 50,
-                  color: Colors.redAccent,
+                  color: LoginColors.colorRed,
                 ),
               ],
             ),
