@@ -24,7 +24,7 @@ class _AppBarSectionState extends State<AppBarSection> {
   Future<void> _loadUserName() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      userName = prefs.getString('user_name'); // null if not set
+      userName = prefs.getString('user_name');
     });
   }
 
@@ -35,9 +35,8 @@ class _AppBarSectionState extends State<AppBarSection> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // 👇 Show greeting if name exists
           Text(
-            userName != null ? "Hello $userName," : LoginText().cineFlix,
+            LoginText().cineFlix,
             style: AppFonts.appbarFont.copyWith(color: LoginColors.colorRed),
           ),
           GestureDetector(

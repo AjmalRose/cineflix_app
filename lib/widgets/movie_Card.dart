@@ -8,8 +8,8 @@ class MovieCard extends StatelessWidget {
   final String year;
   final String genre;
   final double rating;
-  final String? description; // optional
-  final String duration; // new - optional on card, default provided
+  final String? description;
+  final String duration;
   final bool isFeatured;
 
   MovieCard({
@@ -20,7 +20,7 @@ class MovieCard extends StatelessWidget {
     required this.genre,
     required this.rating,
     this.description,
-    this.duration = 'N/A', // default so existing usages won't break
+    this.duration = 'N/A',
     this.isFeatured = false,
   }) : super(key: key);
 
@@ -28,7 +28,6 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // navigate to detail screen and pass duration
         Navigator.push(
           context,
           MaterialPageRoute(

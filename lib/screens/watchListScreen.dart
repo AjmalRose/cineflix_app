@@ -41,22 +41,6 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
             SizedBox(height: 20),
 
             // Stats Cards
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                WatchlistStatsCard(
-                  icon: Icons.access_time,
-                  value: "0",
-                  label: "Hours Watched",
-                ),
-                WatchlistStatsCard(
-                  icon: Icons.trending_up,
-                  value: "0",
-                  label: "Movies Watched",
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
 
             // Pie Chart + Legend
             Container(
@@ -88,6 +72,23 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                   ),
 
                   SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 120, // set height here
+                          child: WatchlistStatsCard(
+                            icon: Icons.trending_up,
+                            value: "5",
+                            label: "Movies Watched",
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
 
                   // Legend directly below pie chart
                   WatchlistLegend(

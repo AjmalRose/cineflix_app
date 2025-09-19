@@ -1,5 +1,8 @@
+import 'package:cineflix_app/services/shared_prefs.dart';
+import 'package:cineflix_app/widgets/watchList_widgets/watch_tracker.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/services/favouritePage_pref.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final String image;
@@ -8,9 +11,9 @@ class MovieDetailScreen extends StatefulWidget {
   final String genre;
   final double rating;
   final String description;
-  final String duration; // new required property
+  final String duration;
 
-  const MovieDetailScreen({
+  MovieDetailScreen({
     Key? key,
     required this.image,
     required this.title,
@@ -27,6 +30,57 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   bool isSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfSaved();
+  }
+
+  Future<void> checkIfSaved() async {
+    final username = await SharedPrefs.getUsername();
+    if (username == null) return;
+    final favs = await FavouriteService.getFavourites(username);
+    setState(() {
+      isSaved = favs.contains(
+        "${widget.title}|${widget.image}|${widget.year}|${widget.genre}|${widget.duration}",
+      );
+    });
+  }
+
+  Future<void> toggleFavourite() async {
+    final username = await SharedPrefs.getUsername();
+    if (username == null) return;
+    final movieData =
+        "${widget.title}|${widget.image}|${widget.year}|${widget.genre}|${widget.duration}";
+
+    if (isSaved) {
+      await FavouriteService.removeFavourite(username, movieData);
+    } else {
+      await FavouriteService.addFavourite(username, movieData);
+    }
+    setState(() {
+      isSaved = !isSaved;
+    });
+  }
+
+  Future<void> watchNow() async {
+    final username = await SharedPrefs.getUsername();
+    if (username == null) return;
+
+    final movieData =
+        "${widget.title}|${widget.image}|${widget.year}|${widget.genre}|${widget.duration}";
+
+    // Save movie to favourites/watchlist
+    await FavouriteService.addFavourite(username, movieData);
+
+    // Update genre stats for pie chart
+    await WatchTracker.addGenre(widget.genre);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("${widget.title} added to Watchlist 🎬")),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,14 +126,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  // <-- rating + duration here
                   Text(
                     "${widget.year} • ${widget.genre} • ⭐ ${widget.rating} • ${widget.duration}",
                     style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
                   SizedBox(height: 16),
                   GestureDetector(
-                    onTap: () => setState(() => isSaved = !isSaved),
+                    onTap: toggleFavourite,
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(vertical: 14),
@@ -112,9 +165,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: () {
-                            // TODO: open player / playback
-                          },
+                          onPressed: watchNow,
                           icon: Icon(Icons.play_arrow),
                           label: Text("Watch Now"),
                           style: ElevatedButton.styleFrom(
@@ -128,7 +179,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                       SizedBox(width: 12),
                       OutlinedButton(
-                        onPressed: () => setState(() => isSaved = !isSaved),
+                        onPressed: toggleFavourite,
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
                             color: ColorsConstants.ColorWhite.withOpacity(0.12),

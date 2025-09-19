@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cineflix_app/models/user_model.dart';
 import 'package:cineflix_app/services/user_service.dart';
 import 'package:cineflix_app/widgets/logout_profile.dart';
+import 'package:app_settings/app_settings.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -74,9 +75,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ).then((_) => _loadUser()), // Refresh data after editing
                     ),
                     _buildOption(Icons.notifications, "Notifications"),
-                    _buildOption(Icons.settings, "Settings"),
+                    _buildOption(
+                      Icons.settings,
+                      "Settings",
+                      onTap: () {
+                        AppSettings.openAppSettings(asAnotherTask: true);
+                      },
+                    ),
                     _buildOption(Icons.help_outline, "Help & Support"),
-                    LogoutButton(),
+                    LogoutProfile(),
                     SizedBox(height: 30),
                     Text(
                       "Version 1.0.0",

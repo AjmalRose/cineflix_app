@@ -1,5 +1,7 @@
 import 'package:cineflix_app/constants/image_constants.dart';
+import 'package:cineflix_app/screens/movie_detail_screen.dart';
 import 'package:cineflix_app/services/favouritePage_pref.dart';
+import 'package:cineflix_app/services/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 
@@ -20,12 +22,16 @@ class _FavouritePageState extends State<FavouritePage> {
   }
 
   Future<void> loadFavourites() async {
-    final data = await FavouriteService.getFavourites();
+    final username = await SharedPrefs.getUsername();
+    if (username == null) return;
+    final data = await FavouriteService.getFavourites(username);
     setState(() => favourites = data);
   }
 
   Future<void> deleteMovie(String movieData) async {
-    await FavouriteService.removeFavourite(movieData);
+    final username = await SharedPrefs.getUsername();
+    if (username == null) return;
+    await FavouriteService.removeFavourite(username, movieData);
     loadFavourites();
   }
 
@@ -51,15 +57,32 @@ class _FavouritePageState extends State<FavouritePage> {
           : ListView.builder(
               itemCount: favourites.length,
               itemBuilder: (context, index) {
-                final parts = favourites[index].split(
-                  '|',
-                ); // [title, image, year, genre]
+                final parts = favourites[index].split('|');
                 final title = parts[0];
                 final image = parts[1];
                 final year = parts[2];
                 final genre = parts[3];
+                final duration = parts.length > 4 ? parts[4] : 'N/A';
 
                 return ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MovieDetailScreen(
+                          title: title,
+                          image: image,
+                          year: year,
+                          genre: genre,
+                          duration: duration,
+                          rating: 0.0,
+                          description: "No description available",
+                        ),
+                      ),
+                    ).then(
+                      (_) => loadFavourites(),
+                    ); //  refresh after coming back
+                  },
                   leading: Image.asset(image, width: 100, fit: BoxFit.cover),
                   title: Text(
                     title,
@@ -74,10 +97,9 @@ class _FavouritePageState extends State<FavouritePage> {
                   ),
                   trailing: IconButton(
                     icon: Image.asset(
-                      AppImages.deleteIcon, // your image path constant
+                      AppImages.deleteIcon,
                       width: 60,
                       height: 60,
-                      // applies color overlay if it's a pure icon image
                     ),
                     onPressed: () => deleteMovie(favourites[index]),
                   ),

@@ -33,16 +33,15 @@ class LoginPage extends StatelessWidget {
       return;
     }
 
-    // save user into your custom service
+    //  Save user into  custom service
     final user = UserModel(fullName: name, email: email, password: pass);
     await UserService.saveUser(user);
+
+    //  Mark login status & current user
+    await SharedPrefs.setUsername(name);
     await SharedPrefs.setLoginStatus(true);
 
-    // 🔹 save full name into SharedPreferences (so AppBarSection can read it)
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user_name', name);
-
-    // 🔹 navigate to home
+    //  Navigate to home
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => BottomNavBar()),

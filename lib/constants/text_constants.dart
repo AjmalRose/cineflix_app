@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 
 class TextConstants {
   final splashwelcome = "Welcome to CineFlix";
+  static final appBarName = "CineFlix";
 }
 
 class LoginText {
