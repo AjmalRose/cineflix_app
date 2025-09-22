@@ -5,30 +5,37 @@ import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:cineflix_app/screens/loginPage.dart';
 import 'package:cineflix_app/widgets/bottom_nav_bar.dart';
+import 'package:cineflix_app/services/shared_prefs.dart';
 
 class SplashScreen extends StatefulWidget {
-  final bool isLoggedIn;
-  const SplashScreen({super.key, required this.isLoggedIn});
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool isLoggedIn = false;
+
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), _navigate);
+    _loadSessionAndNavigate();
   }
 
-  void _navigate() {
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => widget.isLoggedIn ? BottomNavBar() : LoginPage(),
-      ),
-    );
+  Future<void> _loadSessionAndNavigate() async {
+    isLoggedIn = await SharedPrefs.getLoginStatus();
+
+    // Wait 3 seconds for splash effect
+    Timer(Duration(seconds: 3), () {
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => isLoggedIn ? BottomNavBar() : LoginPage(),
+        ),
+      );
+    });
   }
 
   @override

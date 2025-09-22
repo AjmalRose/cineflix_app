@@ -1,41 +1,54 @@
 import 'package:hive/hive.dart';
-import '../models/user_model.dart';
+import 'package:cineflix_app/models/user_model.dart';
+import 'package:cineflix_app/services/shared_prefs.dart';
 
 class UserService {
-  static const String _userBox = 'users';
-  static const String _currentUserKey = 'currentUser';
+  static Box<UserModel> getUserBox() => Hive.box<UserModel>('users');
 
-  static Future<Box<UserModel>> _getBox() async {
-    return await Hive.openBox<UserModel>(_userBox);
+  static Future<bool> saveUser(UserModel user) async {
+    final box = getUserBox();
+    final exists = box.values.any((u) => u.email == user.email);
+    if (exists) return false;
+
+    await box.add(user);
+    return true;
   }
 
-  /// Create User
-  static Future<void> saveUser(UserModel user) async {
-    final box = await _getBox();
-    await box.put(_currentUserKey, user);
+  static Future<UserModel?> validateUser(String email, String password) async {
+    final box = getUserBox();
+    try {
+      return box.values.firstWhere(
+        (u) => u.email == email && u.password == password,
+      );
+    } catch (e) {
+      return null;
+    }
   }
 
-  /// Get Current User
-  static Future<UserModel?> getUser() async {
-    final box = await _getBox();
-    return box.get(_currentUserKey);
+  static Future<UserModel?> getCurrentUser() async {
+    final email = await SharedPrefs.getUsername();
+    if (email == null) return null;
+
+    try {
+      return getUserBox().values.firstWhere((u) => u.email == email);
+    } catch (e) {
+      return null;
+    }
   }
 
-  /// Update User
-  static Future<void> updateUser(UserModel updatedUser) async {
-    final box = await _getBox();
-    await box.put(_currentUserKey, updatedUser);
+  static Future<void> updateUser(
+    UserModel user, {
+    String? fullName,
+    String? password,
+    String? profilePic,
+  }) async {
+    if (fullName != null) user.fullName = fullName;
+    if (password != null) user.password = password;
+    if (profilePic != null) user.profilePic = profilePic;
+    await user.save();
   }
 
-  /// Delete User
-  static Future<void> deleteUser() async {
-    final box = await _getBox();
-    await box.delete(_currentUserKey);
-  }
-
-  /// Check if user exists
-  static Future<bool> isUserLoggedIn() async {
-    final box = await _getBox();
-    return box.containsKey(_currentUserKey);
+  static Future<void> deleteUser(UserModel user) async {
+    await user.delete();
   }
 }

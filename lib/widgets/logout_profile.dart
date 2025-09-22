@@ -1,36 +1,38 @@
+// logout_profile.dart
 import 'package:flutter/material.dart';
-import 'package:cineflix_app/constants/colors_contants.dart';
-import 'package:cineflix_app/constants/text_constants.dart';
+import 'package:cineflix_app/screens/signInPage.dart';
 import 'package:cineflix_app/services/shared_prefs.dart';
-import 'package:cineflix_app/screens/loginPage.dart';
+import 'package:cineflix_app/services/current_user_notifier.dart';
 
 class LogoutProfile extends StatelessWidget {
   const LogoutProfile({super.key});
 
-  Future<void> _logout(BuildContext context) async {
-    await SharedPrefs.clearUser();
-
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => LoginPage()),
-      (route) => false,
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () => _handleLogout(context),
+      icon: const Icon(Icons.logout),
+      label: const Text("Logout"),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.red,
+        minimumSize: const Size.fromHeight(50),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(Icons.logout, color: LoginColors.colorRed),
-      title: Text(
-        "Logout",
-        style: AppFonts.logout.copyWith(color: LoginColors.colorRed),
-      ),
-      trailing: Icon(
-        Icons.arrow_forward_ios,
-        color: LoginColors.colorgrey,
-        size: 16,
-      ),
-      onTap: () => _logout(context),
+  void _handleLogout(BuildContext context) async {
+    // ✅ Only clear session info (username + login status)
+    await SharedPrefs.setLoginStatus(false);
+    await SharedPrefs.setUsername('');
+
+    // Reset notifier
+    currentUserNotifier.value = null;
+
+    // Navigate back to SignIn page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => SignInPage()),
     );
   }
 }

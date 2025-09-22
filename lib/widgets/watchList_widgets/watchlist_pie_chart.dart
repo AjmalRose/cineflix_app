@@ -4,10 +4,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'watch_tracker.dart';
 
 class WatchlistPieChart extends StatefulWidget {
-  const WatchlistPieChart({
-    super.key,
-    required Null Function(dynamic counts, dynamic colors) onDataLoaded,
-  });
+  final void Function(Map<String, int> counts, Map<String, Color> colors)
+  onDataLoaded;
+
+  const WatchlistPieChart({super.key, required this.onDataLoaded});
 
   @override
   State<WatchlistPieChart> createState() => _WatchlistPieChartState();
@@ -38,6 +38,9 @@ class _WatchlistPieChartState extends State<WatchlistPieChart> {
     setState(() {
       genreCounts = data;
     });
+
+    // Notify parent screen about the loaded data
+    widget.onDataLoaded(genreCounts, genreColors);
   }
 
   @override
@@ -55,7 +58,7 @@ class _WatchlistPieChartState extends State<WatchlistPieChart> {
 
     return Column(
       children: [
-        //Pie Chart
+        // Pie Chart
         SizedBox(
           height: 200,
           child: PieChart(

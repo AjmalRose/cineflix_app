@@ -1,12 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/image_constants.dart';
 import 'package:cineflix_app/screens/movie_detail_screen.dart';
 import 'package:cineflix_app/services/favouritePage_pref.dart';
 import 'package:cineflix_app/services/shared_prefs.dart';
-import 'package:flutter/material.dart';
-import 'package:cineflix_app/constants/colors_contants.dart';
 
 class FavouritePage extends StatefulWidget {
-  FavouritePage({Key? key}) : super(key: key);
+  const FavouritePage({super.key});
 
   @override
   State<FavouritePage> createState() => _FavouritePageState();
@@ -18,21 +18,29 @@ class _FavouritePageState extends State<FavouritePage> {
   @override
   void initState() {
     super.initState();
-    loadFavourites();
+    _loadFavourites(); // load initially
   }
 
-  Future<void> loadFavourites() async {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadFavourites(); // reload for current user
+  }
+
+  Future<void> _loadFavourites() async {
     final username = await SharedPrefs.getUsername();
     if (username == null) return;
+
     final data = await FavouriteService.getFavourites(username);
     setState(() => favourites = data);
   }
 
-  Future<void> deleteMovie(String movieData) async {
+  Future<void> _deleteMovie(String movieData) async {
     final username = await SharedPrefs.getUsername();
     if (username == null) return;
+
     await FavouriteService.removeFavourite(username, movieData);
-    loadFavourites();
+    _loadFavourites();
   }
 
   @override
@@ -79,9 +87,7 @@ class _FavouritePageState extends State<FavouritePage> {
                           description: "No description available",
                         ),
                       ),
-                    ).then(
-                      (_) => loadFavourites(),
-                    ); //  refresh after coming back
+                    ).then((_) => _loadFavourites());
                   },
                   leading: Image.asset(image, width: 100, fit: BoxFit.cover),
                   title: Text(
@@ -101,7 +107,7 @@ class _FavouritePageState extends State<FavouritePage> {
                       width: 60,
                       height: 60,
                     ),
-                    onPressed: () => deleteMovie(favourites[index]),
+                    onPressed: () => _deleteMovie(favourites[index]),
                   ),
                 );
               },

@@ -1,8 +1,11 @@
-import 'package:cineflix_app/services/shared_prefs.dart';
-import 'package:cineflix_app/widgets/watchList_widgets/watch_tracker.dart';
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/constants/image_constants.dart';
+import 'package:cineflix_app/screens/movie_detail_screen.dart';
 import 'package:cineflix_app/services/favouritePage_pref.dart';
+import 'package:cineflix_app/services/shared_prefs.dart';
+import 'package:cineflix_app/widgets/watchList_widgets/watch_tracker.dart';
+import 'package:cineflix_app/services/current_user_notifier.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final String image;
@@ -34,23 +37,35 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   void initState() {
     super.initState();
-    checkIfSaved();
+    _checkIfSaved();
+
+    // React to user changes
+    currentUserNotifier.addListener(_checkIfSaved);
   }
 
-  Future<void> checkIfSaved() async {
-    final username = await SharedPrefs.getUsername();
+  @override
+  void dispose() {
+    currentUserNotifier.removeListener(_checkIfSaved);
+    super.dispose();
+  }
+
+  Future<void> _checkIfSaved() async {
+    final username =
+        currentUserNotifier.value ?? await SharedPrefs.getUsername();
     if (username == null) return;
+
     final favs = await FavouriteService.getFavourites(username);
-    setState(() {
-      isSaved = favs.contains(
-        "${widget.title}|${widget.image}|${widget.year}|${widget.genre}|${widget.duration}",
-      );
-    });
+    final movieData =
+        "${widget.title}|${widget.image}|${widget.year}|${widget.genre}|${widget.duration}";
+
+    if (mounted) setState(() => isSaved = favs.contains(movieData));
   }
 
-  Future<void> toggleFavourite() async {
-    final username = await SharedPrefs.getUsername();
+  Future<void> _toggleFavourite() async {
+    final username =
+        currentUserNotifier.value ?? await SharedPrefs.getUsername();
     if (username == null) return;
+
     final movieData =
         "${widget.title}|${widget.image}|${widget.year}|${widget.genre}|${widget.duration}";
 
@@ -59,13 +74,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     } else {
       await FavouriteService.addFavourite(username, movieData);
     }
-    setState(() {
-      isSaved = !isSaved;
-    });
+
+    if (mounted) setState(() => isSaved = !isSaved);
   }
 
-  Future<void> watchNow() async {
-    final username = await SharedPrefs.getUsername();
+  Future<void> _watchNow() async {
+    final username =
+        currentUserNotifier.value ?? await SharedPrefs.getUsername();
     if (username == null) return;
 
     final movieData =
@@ -132,12 +147,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   ),
                   SizedBox(height: 16),
                   GestureDetector(
-                    onTap: toggleFavourite,
+                    onTap: _toggleFavourite,
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(vertical: 14),
                       decoration: BoxDecoration(
-                        color: isSaved ? Colors.green : Colors.redAccent,
+                        color: isSaved
+                            ? LoginColors.greenColor
+                            : Colors.redAccent,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       alignment: Alignment.center,
@@ -165,7 +182,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: watchNow,
+                          onPressed: _watchNow,
                           icon: Icon(Icons.play_arrow),
                           label: Text("Watch Now"),
                           style: ElevatedButton.styleFrom(
@@ -179,7 +196,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                       SizedBox(width: 12),
                       OutlinedButton(
-                        onPressed: toggleFavourite,
+                        onPressed: _toggleFavourite,
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
                             color: ColorsConstants.ColorWhite.withOpacity(0.12),

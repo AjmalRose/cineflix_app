@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/image_constants.dart';
-import 'package:flutter/material.dart';
+import 'package:cineflix_app/widgets/watchList_widgets/watch_tracker.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_movie_card.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_pie_chart.dart';
 import 'package:cineflix_app/widgets/watchList_widgets/watchlist_stats_card.dart';
@@ -18,7 +19,38 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
   Map<String, Color> genreColors = {};
 
   @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadUserData(); // reload per-user stats
+  }
+
+  Future<void> _loadUserData() async {
+    final counts = await WatchTracker.getGenreCounts();
+    setState(() {
+      genreCounts = counts;
+      genreColors = {
+        "Action": PieColor.action,
+        "Drama": PieColor.drama,
+        "Thriller": PieColor.thriller,
+        "Crime": PieColor.crime,
+        "Romance": PieColor.romance,
+        "Sci-Fi": PieColor.scifi,
+        "Adventure": PieColor.adventure,
+        "Animation": PieColor.animation,
+      };
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final totalWatched = genreCounts.values.fold(0, (a, b) => a + b);
+
     return Scaffold(
       backgroundColor: ColorsConstants.ColorBlack,
       appBar: AppBar(
@@ -30,7 +62,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,17 +70,14 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
               "Track your viewing habits",
               style: TextStyle(color: LoginColors.colorgrey, fontSize: 16),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            // Stats Cards
-
-            // Pie Chart + Legend
             Container(
               decoration: BoxDecoration(
                 color: ColorsConstants.ColorBlack,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   Text(
@@ -59,9 +88,9 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-                  // Pie Chart with dynamic data
+                  // Pie chart
                   WatchlistPieChart(
                     onDataLoaded: (counts, colors) {
                       setState(() {
@@ -71,26 +100,25 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                     },
                   ),
 
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-
                     children: [
                       Expanded(
                         child: SizedBox(
-                          height: 120, // set height here
+                          height: 120,
                           child: WatchlistStatsCard(
                             icon: Icons.trending_up,
-                            value: "5",
+                            value: totalWatched.toString(),
                             label: "Movies Watched",
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                  // Legend directly below pie chart
                   WatchlistLegend(
                     genreColors: genreColors,
                     genreCounts: genreCounts,
@@ -98,9 +126,8 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            // Upcoming Releases
             Text(
               "Upcoming Releases",
               style: TextStyle(
@@ -109,7 +136,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             WatchlistMovieCard(
               title: "Dune: Part Two",

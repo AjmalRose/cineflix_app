@@ -3,42 +3,23 @@ import 'package:cineflix_app/constants/image_constants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:cineflix_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class AppBarSection extends StatefulWidget {
+class AppBarSection extends StatelessWidget {
   const AppBarSection({super.key});
-
-  @override
-  State<AppBarSection> createState() => _AppBarSectionState();
-}
-
-class _AppBarSectionState extends State<AppBarSection> {
-  String? userName;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadUserName();
-  }
-
-  Future<void> _loadUserName() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userName = prefs.getString('user_name');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Only cineFlix text
           Text(
             LoginText().cineFlix,
             style: AppFonts.appbarFont.copyWith(color: LoginColors.colorRed),
           ),
+          // Profile icon
           GestureDetector(
             onTap: () {
               Navigator.push(

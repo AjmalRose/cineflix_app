@@ -4,16 +4,16 @@ import 'package:cineflix_app/services/shared_prefs.dart';
 
 class WatchTracker {
   // Generate a unique key per user
-  static Future<String?> _getUserKey() async {
-    final username = await SharedPrefs.getUsername();
-    if (username == null) return null;
-    return '${username}_genreCounts';
+  static Future<String?> _getUserKey([String? username]) async {
+    final user = username ?? await SharedPrefs.getUsername();
+    if (user == null) return null;
+    return '${user}_genreCounts';
   }
 
-  // Get current genre counts for the logged-in user
-  static Future<Map<String, int>> getGenreCounts() async {
+  // Get current genre counts for a specific or logged-in user
+  static Future<Map<String, int>> getGenreCounts({String? username}) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = await _getUserKey();
+    final key = await _getUserKey(username);
     if (key == null) return {};
     final data = prefs.getString(key);
     if (data == null) return {};
@@ -31,10 +31,10 @@ class WatchTracker {
     await prefs.setString(key, jsonEncode(counts));
   }
 
-  // Clear stats only for the logged-in user
-  static Future<void> clearStats() async {
+  // ✅ Clear stats for a specific or logged-in user
+  static Future<void> clearStats([String? username]) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = await _getUserKey();
+    final key = await _getUserKey(username);
     if (key != null) {
       await prefs.remove(key);
     }

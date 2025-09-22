@@ -1,6 +1,5 @@
-import 'package:cineflix_app/screens/signInPage.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:cineflix_app/constants/colors_contants.dart';
 import 'package:cineflix_app/constants/text_constants.dart';
 import 'package:cineflix_app/services/shared_prefs.dart';
@@ -8,7 +7,7 @@ import 'package:cineflix_app/services/user_service.dart';
 import 'package:cineflix_app/models/user_model.dart';
 import 'package:cineflix_app/widgets/login_widgets.dart';
 import 'package:cineflix_app/widgets/bottom_nav_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cineflix_app/screens/signInPage.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -18,7 +17,7 @@ class LoginPage extends StatelessWidget {
   final passCtrl = TextEditingController();
   final confirmCtrl = TextEditingController();
 
-  Future<void> _handleLogin(BuildContext context) async {
+  Future<void> _handleSignup(BuildContext context) async {
     final name = nameCtrl.text.trim();
     final email = emailCtrl.text.trim();
     final pass = passCtrl.text.trim();
@@ -28,20 +27,26 @@ class LoginPage extends StatelessWidget {
       _showError(context, "Please fill all fields");
       return;
     }
+
     if (pass != confirm) {
       _showError(context, "Passwords do not match");
       return;
     }
 
-    //  Save user into  custom service
     final user = UserModel(fullName: name, email: email, password: pass);
-    await UserService.saveUser(user);
 
-    //  Mark login status & current user
-    await SharedPrefs.setUsername(name);
+    // Hive: save new user
+    final success = await UserService.saveUser(user);
+    if (!success) {
+      _showError(context, "Account already exists!");
+      return;
+    }
+
+    // Save session
+    await SharedPrefs.setUsername(email);
     await SharedPrefs.setLoginStatus(true);
 
-    //  Navigate to home
+    // Navigate to app
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => BottomNavBar()),
@@ -60,9 +65,8 @@ class LoginPage extends StatelessWidget {
       backgroundColor: ColorsConstants.ColorBlack,
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 LoginText().cineFlix,
@@ -72,15 +76,9 @@ class LoginPage extends StatelessWidget {
                   fontWeight: AppFonts.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
-                LoginText.secondText,
-                style: TextStyle(color: LoginColors.colorgrey),
-              ),
-              SizedBox(height: 30),
-
+              const SizedBox(height: 30),
               Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: ColorsConstants.ColorBlack,
                   borderRadius: BorderRadius.circular(30),
@@ -88,68 +86,42 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      LoginText.createAccount,
+                      "Create Account",
                       style: TextStyle(
                         fontSize: AppFonts.createAccount,
                         fontWeight: FontWeight.bold,
                         color: ColorsConstants.ColorWhite,
                       ),
                     ),
-                    SizedBox(height: 50),
-                    Text(
-                      LoginText.fourthText,
-                      style: TextStyle(color: LoginColors.colorgrey),
-                    ),
                     SizedBox(height: 20),
-
-                    // 🔹 Input Fields
-                    inputField(hint: LoginText.fullName, controller: nameCtrl),
+                    inputField(hint: "Full Name", controller: nameCtrl),
                     SizedBox(height: 15),
-                    inputField(hint: LoginText.email, controller: emailCtrl),
+                    inputField(hint: "Email", controller: emailCtrl),
                     SizedBox(height: 15),
                     inputField(
-                      hint: LoginText.password,
+                      hint: "Password",
                       controller: passCtrl,
                       isPassword: true,
                     ),
                     SizedBox(height: 15),
                     inputField(
-                      hint: LoginText.confirmPassword,
+                      hint: "Confirm Password",
                       controller: confirmCtrl,
                       isPassword: true,
                     ),
-                    SizedBox(height: 15),
-
-                    // 🔹 Main Button with login logic
+                    SizedBox(height: 20),
                     mainButton(
                       text: "Create Account",
-                      onPressed: () => _handleLogin(context),
-                    ),
-
-                    SizedBox(height: 15),
-                    Text(
-                      LoginText.orContinueWith,
-                      style: TextStyle(color: LoginColors.colorgrey),
-                    ),
-                    SizedBox(height: 10),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        socialButton(Icons.g_mobiledata),
-                        SizedBox(width: 10),
-                        socialButton(Icons.apple),
-                      ],
+                      onPressed: () => _handleSignup(context),
                     ),
                     SizedBox(height: 15),
-
                     Text.rich(
                       TextSpan(
-                        text: LoginText.textSpan,
+                        text: "Already have an account? ",
                         style: TextStyle(color: LoginColors.colorgrey),
                         children: [
                           TextSpan(
-                            text: LoginText.textSpan2,
+                            text: "Sign In",
                             style: TextStyle(color: LoginColors.colorRed),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {

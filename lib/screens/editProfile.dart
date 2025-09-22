@@ -1,62 +1,95 @@
+// edit_profile_screen.dart
 import 'package:flutter/material.dart';
 import 'package:cineflix_app/models/user_model.dart';
 import 'package:cineflix_app/services/user_service.dart';
+import 'package:cineflix_app/widgets/login_widgets.dart';
+import 'package:cineflix_app/constants/colors_contants.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final UserModel? user;
-  const EditProfileScreen({super.key, this.user});
+  final UserModel user;
+  const EditProfileScreen({super.key, required this.user});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final nameCtrl = TextEditingController();
-  final emailCtrl = TextEditingController();
-  final passCtrl = TextEditingController();
+  late TextEditingController nameCtrl;
+  late TextEditingController passCtrl;
+  late TextEditingController picCtrl;
 
   @override
   void initState() {
     super.initState();
-    nameCtrl.text = widget.user?.fullName ?? '';
-    emailCtrl.text = widget.user?.email ?? '';
-    passCtrl.text = widget.user?.password ?? '';
+    nameCtrl = TextEditingController(text: widget.user.fullName);
+    passCtrl = TextEditingController(text: widget.user.password);
+    picCtrl = TextEditingController(text: widget.user.profilePic ?? "");
   }
 
-  Future<void> _saveProfile() async {
-    final updatedUser = UserModel(
-      fullName: nameCtrl.text,
-      email: emailCtrl.text,
-      password: passCtrl.text,
+  @override
+  void dispose() {
+    nameCtrl.dispose();
+    passCtrl.dispose();
+    picCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _saveChanges() async {
+    final newName = nameCtrl.text.trim();
+    final newPass = passCtrl.text.trim();
+    final newPic = picCtrl.text.trim();
+
+    if (newName.isEmpty || newPass.isEmpty) {
+      _showError("Full Name and Password cannot be empty");
+      return;
+    }
+
+    await UserService.updateUser(
+      widget.user,
+      fullName: newName,
+      password: newPass,
+      profilePic: newPic,
     );
-    await UserService.updateUser(updatedUser);
-    Navigator.pop(context);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Profile updated successfully"),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    Navigator.pop(context); // Go back to previous screen
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: LoginColors.colorRed),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(title: Text("Edit Profile"), backgroundColor: Colors.red),
-      body: Padding(
-        padding: EdgeInsets.all(16),
+      backgroundColor: ColorsConstants.ColorBlack,
+      appBar: AppBar(
+        backgroundColor: ColorsConstants.ColorBlack,
+        title: const Text("Edit Profile"),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: nameCtrl,
-              decoration: InputDecoration(labelText: "Full Name"),
-            ),
-            TextField(
-              controller: emailCtrl,
-              decoration: InputDecoration(labelText: "Email"),
-            ),
-            TextField(
+            inputField(hint: "Full Name", controller: nameCtrl),
+            const SizedBox(height: 15),
+            inputField(
+              hint: "Password",
               controller: passCtrl,
-              decoration: InputDecoration(labelText: "Password"),
-              obscureText: true,
+              isPassword: true,
             ),
-            SizedBox(height: 20),
-            ElevatedButton(onPressed: _saveProfile, child: Text("Save")),
+            const SizedBox(height: 15),
+            inputField(hint: "Profile Pic URL", controller: picCtrl),
+            const SizedBox(height: 30),
+            mainButton(text: "Save Changes", onPressed: _saveChanges),
           ],
         ),
       ),

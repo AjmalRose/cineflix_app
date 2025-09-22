@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cineflix_app/services/shared_prefs.dart';
 
 class FavouriteService {
   static String _keyForUser(String username) => 'favourite_movies_$username';
@@ -22,5 +23,13 @@ class FavouriteService {
     final favs = prefs.getStringList(_keyForUser(username)) ?? [];
     favs.remove(movieData);
     await prefs.setStringList(_keyForUser(username), favs);
+  }
+
+  // ✅ Clear favourites for specific OR current user
+  static Future<void> clearFavourites([String? username]) async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = username ?? await SharedPrefs.getUsername();
+    if (user == null) return; // prevent error
+    await prefs.remove(_keyForUser(user));
   }
 }

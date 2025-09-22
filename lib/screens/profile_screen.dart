@@ -1,10 +1,9 @@
-import 'package:cineflix_app/constants/image_constants.dart';
-import 'package:cineflix_app/screens/editProfile.dart';
-import 'package:flutter/material.dart';
-import 'package:cineflix_app/models/user_model.dart';
 import 'package:cineflix_app/services/user_service.dart';
 import 'package:cineflix_app/widgets/logout_profile.dart';
-import 'package:app_settings/app_settings.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cineflix_app/models/user_model.dart';
+import 'package:cineflix_app/constants/colors_contants.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,103 +18,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _loadUser();
+    _loadCurrentUser();
   }
 
-  Future<void> _loadUser() async {
-    final fetchedUser = await UserService.getUser();
-    setState(() => user = fetchedUser);
+  Future<void> _loadCurrentUser() async {
+    final currentUser = await UserService.getCurrentUser();
+    setState(() {
+      user = currentUser;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: user == null
-            ? Center(
-                child: Text(
-                  "No user found",
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-            : SingleChildScrollView(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 20),
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(AppImages.profilePic),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      user!.fullName,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      user!.email,
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
-                    ),
-                    SizedBox(height: 30),
-                    _buildOption(
-                      Icons.edit,
-                      "Edit Profile",
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => EditProfileScreen(user: user),
-                        ),
-                      ).then((_) => _loadUser()), // Refresh data after editing
-                    ),
-                    _buildOption(Icons.notifications, "Notifications"),
-                    _buildOption(
-                      Icons.settings,
-                      "Settings",
-                      onTap: () {
-                        AppSettings.openAppSettings(asAnotherTask: true);
-                      },
-                    ),
-                    _buildOption(Icons.help_outline, "Help & Support"),
-                    LogoutProfile(),
-                    SizedBox(height: 30),
-                    Text(
-                      "Version 1.0.0",
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
-                    ),
-                  ],
-                ),
-              ),
+      appBar: AppBar(
+        title: const Text("Profile"),
+        centerTitle: true,
+        backgroundColor: ColorsConstants.ColorBlack,
+        actions: [
+          IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
+        ],
       ),
-    );
-  }
-
-  Widget _buildOption(
-    IconData icon,
-    String text, {
-    Color color = Colors.white,
-    VoidCallback? onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          children: [
-            Icon(icon, color: color),
-            SizedBox(width: 15),
-            Text(text, style: TextStyle(color: color, fontSize: 18)),
-            Spacer(),
-            Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
-          ],
-        ),
-      ),
+      body: user == null
+          ? const Center(
+              child: Text("No user data found", style: TextStyle(fontSize: 18)),
+            )
+          : Column(
+              children: [
+                const SizedBox(height: 30),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(user!.profilePic),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  user!.fullName,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  user!.email,
+                  style: const TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit),
+                  label: const Text("Edit Profile"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: LoginColors.darkRed,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: LogoutProfile(),
+                ),
+              ],
+            ),
     );
   }
 }

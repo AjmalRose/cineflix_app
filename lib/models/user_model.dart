@@ -13,9 +13,14 @@ class UserModel extends HiveObject {
   @HiveField(2)
   String password;
 
+  @HiveField(3)
+  String profilePic;
+
   UserModel({
     required this.fullName,
     required this.email,
     required this.password,
+    this.profilePic =
+        "https://cdn-icons-png.freepik.com/512/8608/8608769.png", // default avatar
   });
 }

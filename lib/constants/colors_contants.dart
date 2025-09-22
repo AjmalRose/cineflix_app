@@ -12,6 +12,7 @@ class LoginColors {
   static final darkRed = Colors.red[700];
   static final redAccent = Colors.redAccent;
   static final bluecolor = Colors.lightBlueAccent;
+  static final greenColor = Colors.green;
 }
 
 class PieColor {
