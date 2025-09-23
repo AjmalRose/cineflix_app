@@ -87,7 +87,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               isPassword: true,
             ),
             const SizedBox(height: 15),
-            inputField(hint: "Profile Pic URL", controller: picCtrl),
             const SizedBox(height: 30),
             mainButton(text: "Save Changes", onPressed: _saveChanges),
           ],

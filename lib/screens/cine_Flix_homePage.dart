@@ -1,4 +1,5 @@
 import 'package:cineflix_app/constants/colors_contants.dart';
+import 'package:cineflix_app/theme/app_theme.dart';
 import 'package:cineflix_app/widgets/new_Release_section.dart';
 import 'package:cineflix_app/widgets/trending_Section.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,14 @@ class CineflixHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsConstants.ColorBlack,
-      body: SafeArea(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(AppTheme.homeBg),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

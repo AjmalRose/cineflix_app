@@ -39,7 +39,6 @@ class _WatchlistPieChartState extends State<WatchlistPieChart> {
       genreCounts = data;
     });
 
-    // Notify parent screen about the loaded data
     widget.onDataLoaded(genreCounts, genreColors);
   }
 

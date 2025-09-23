@@ -10,16 +10,15 @@ class AppBarSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 50.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Only cineFlix text
           Text(
             LoginText().cineFlix,
             style: AppFonts.appbarFont.copyWith(color: LoginColors.colorRed),
           ),
-          // Profile icon
+
           GestureDetector(
             onTap: () {
               Navigator.push(

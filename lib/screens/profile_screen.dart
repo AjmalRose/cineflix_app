@@ -1,4 +1,6 @@
+import 'package:cineflix_app/screens/editProfile.dart';
 import 'package:cineflix_app/services/user_service.dart';
+import 'package:cineflix_app/theme/app_theme.dart';
 import 'package:cineflix_app/widgets/logout_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -30,59 +32,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Profile"),
-        centerTitle: true,
-        backgroundColor: ColorsConstants.ColorBlack,
-        actions: [
-          IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
-        ],
-      ),
-      body: user == null
-          ? const Center(
-              child: Text("No user data found", style: TextStyle(fontSize: 18)),
-            )
-          : Column(
-              children: [
-                const SizedBox(height: 30),
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(user!.profilePic),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  user!.fullName,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  user!.email,
-                  style: const TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.edit),
-                  label: const Text("Edit Profile"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: LoginColors.darkRed,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: LogoutProfile(),
-                ),
-              ],
+    return Stack(
+      children: [
+        // Background Image
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppTheme.homeBg),
+              fit: BoxFit.cover,
             ),
+          ),
+        ),
+
+        Scaffold(
+          backgroundColor: Colors.transparent, // to show background image
+          appBar: AppBar(
+            title: const Text("Profile"),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {},
+              ),
+              IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
+            ],
+          ),
+          body: user == null
+              ? const Center(
+                  child: Text(
+                    "No user data found",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                )
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 30,
+                  ),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(user!.profilePic),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        user!.fullName,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        user!.email,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton.icon(
+                        onPressed: user == null
+                            ? null
+                            : () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        EditProfileScreen(user: user!),
+                                  ),
+                                );
+                              },
+                        icon: const Icon(Icons.edit),
+                        label: const Text("Edit Profile"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: LoginColors.darkRed,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      const LogoutProfile(),
+                    ],
+                  ),
+                ),
+        ),
+      ],
     );
   }
 }

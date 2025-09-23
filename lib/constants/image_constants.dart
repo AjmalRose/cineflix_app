@@ -3,6 +3,7 @@ import 'package:cineflix_app/widgets/featured_movie_section.dart';
 import 'package:cineflix_app/widgets/film_search_names.dart';
 
 class AppImages {
+  static final appLogo = "assets/images/AppLogo.png";
   static final SplashScreenImage = 'assets/images/logo-removebg-preview.png';
   static final appBarImage = "assets/images/profile-icon.jpg";
 

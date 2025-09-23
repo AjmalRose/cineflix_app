@@ -9,21 +9,21 @@ class SearchBarSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 1.0),
       child: TextField(
         onChanged: onSearch ?? (_) {},
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.grey[900],
+          fillColor: ColorsConstants.ColorBlack,
           hintText: 'Search movies, series...',
           hintStyle: TextStyle(color: Colors.white54),
           prefixIcon: Icon(
             Icons.youtube_searched_for_rounded,
-            color: Colors.redAccent,
+            color: LoginColors.redAccent,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide.none,
+            borderSide: BorderSide(color: ColorsConstants.ColorWhite),
           ),
         ),
         style: TextStyle(color: ColorsConstants.ColorWhite),

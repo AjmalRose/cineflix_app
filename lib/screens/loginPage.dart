@@ -46,7 +46,7 @@ class LoginPage extends StatelessWidget {
     await SharedPrefs.setUsername(email);
     await SharedPrefs.setLoginStatus(true);
 
-    // Navigate to app
+    // Navigate to home
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => BottomNavBar()),

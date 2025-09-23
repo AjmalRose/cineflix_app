@@ -31,7 +31,7 @@ class CategorySection extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Chip(
                   label: Text(categories[index]),
-                  backgroundColor: LoginColors.colorRed,
+                  backgroundColor: const Color.fromARGB(242, 122, 45, 51),
                   labelStyle: TextStyle(color: ColorsConstants.ColorWhite),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
